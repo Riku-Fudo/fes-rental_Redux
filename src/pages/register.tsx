@@ -157,26 +157,23 @@ export default function LoginScreen() {
       error.passwordTest === ''
     ) {
       // 登録内容を登録する
-      const response = await fetch(config.users, {
+      const response = await fetch('/api/createUser', {
         //Jsonファイルに送る
         method: 'POST',
         body: JSON.stringify({
           //Jsonデータに保存する内容を記載
           userName: formValues.userName,
           zipcode: formValues.zipcode,
-          prefectures: formValues.prefectures,
+          prefecture: formValues.prefectures,
           city: formValues.city,
           houseNumber: formValues.houseNumber,
-          buildingName: formValues.buildingName,
+          building: formValues.buildingName,
           familyName: formValues.familyName,
           firstName: formValues.firstName,
           familyNameKana: formValues.familyNameKana,
           firstNameKana: formValues.firstNameKana,
           mailAddress: formValues.mailAddress,
           password: formValues.password,
-          rentalHistories,
-          userCarts,
-          favoriteGenre,
         }),
         headers: {
           'Content-type': 'application/json', //Jsonファイルということを知らせるために行う
