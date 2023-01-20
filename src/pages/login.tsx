@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Link from 'next/link';
 import styles from 'styles/login.module.css';
 import Image from 'next/image';
 import Header from '../components/Header';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMailAddress, setPassword } from '../features/loginSlice'
 
+interface RootState {
+  mailAddress: string,
+  password: string
+}
+
 export default function Home() {
   // const [mailAddress, setMailAddress] = useState(''); //名前の情報を更新して保存
   // const [password, setPassword] = useState('');
-  const mailAddress = useSelector((state:any) => state.login.mailAddress);
-  const password = useSelector((state:any) => state.login.password);
+  const mailAddress = useSelector((state:RootState) => state.mailAddress);
+  const password = useSelector((state:RootState) => state.password);
   const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
