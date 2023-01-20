@@ -5,10 +5,15 @@ import Link from 'next/link';
 import styles from 'styles/login.module.css';
 import Image from 'next/image';
 import Header from '../components/Header';
+import { useSelector, useDispatch } from 'react-redux';
+import { setMailAddress, setPassword } from '../features/loginSlice'
 
 export default function Home() {
-  const [mailAddress, setMailAddress] = useState(''); //名前の情報を更新して保存
-  const [password, setPassword] = useState('');
+  // const [mailAddress, setMailAddress] = useState(''); //名前の情報を更新して保存
+  // const [password, setPassword] = useState('');
+  const mailAddress = useSelector((state:any) => state.login.mailAddress);
+  const password = useSelector((state:any) => state.login.password);
+  const dispatch = useDispatch();
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
@@ -64,7 +69,7 @@ export default function Home() {
                   name="mailAddress"
                   id="mailAddress"
                   value={mailAddress}
-                  onChange={(e) => setMailAddress(e.target.value)}
+                  onChange={(e) => dispatch(setMailAddress(e.target.value))}
                 />
               </li>
               <li>
@@ -74,7 +79,7 @@ export default function Home() {
                   name="password"
                   id="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => dispatch(setPassword(e.target.value))}
                 />
               </li>
             </ul>
