@@ -1,6 +1,7 @@
 .paymentMain .errorWrapper {
   width: fit-content;
-  margin: 3rem auto 0;
+  max-width: 100rem;
+  margin-top: 3rem;
 }
 
 .paymentMain .errorWrapper .errorMessage {

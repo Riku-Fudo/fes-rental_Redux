@@ -11,6 +11,8 @@ import { SessionUser } from 'pages/api/getSessionInfo';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { SelectCart } from './api/preRendering/PreCart';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
@@ -79,16 +81,16 @@ export default function Payment({
         dologout={() => setIsLoggedIn(!isLoggedIn)}
       />
       <main className={styles.paymentMain}>
-        {stripeError && (
-          <div className={styles.errorWrapper}>
-            <p className={styles.errorMessage}>
-              決済処理中にエラーが発生しました。
-              <br />
-              時間を置いて再度お試しください。
-            </p>
-          </div>
-        )}
         <section className={styles.orderWrapper}>
+          {stripeError && (
+            <div className={styles.errorWrapper}>
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                決済処理中にエラーが発生しました。
+                時間を置いて再度お試しください。
+              </Alert>
+            </div>
+          )}
           <h1>ご注文内容</h1>
           {user.userCarts?.map((item: UserCart) => (
             <div className={styles.itemGrop} key={item.itemId}>
