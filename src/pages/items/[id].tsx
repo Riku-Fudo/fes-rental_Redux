@@ -427,7 +427,6 @@ export default function ItemDetail({ item }: { item: Item }) {
         {start && (
           <Player
             closePlayer={() => closePlayer()}
-            id={startId}
             startPlayer={() => mutate('/api/getUser')}
           />
         )}
