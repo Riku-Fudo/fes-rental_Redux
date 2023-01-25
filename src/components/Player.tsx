@@ -1,16 +1,19 @@
 import { useRouter } from 'next/router';
 import ReactPlayer from 'react-player'
 import styles from '../styles/player.module.css';
+import { useAppSelector } from '../app/hocks'
+import { selectItems } from '../features/itemsSlice'
 
 type playerProps = {
-  id: number;
   closePlayer: () => void;
   startPlayer: () => void;
 };
 
-export default function Player({ closePlayer, id, startPlayer }: playerProps) {
+export default function Player({ closePlayer, startPlayer }: playerProps) {
   const router = useRouter();
-  const sample = (id: number) => {
+  const { startId } = useAppSelector(selectItems);
+  const start = (id: number) => {
+    console.log(`player:${startId}`)
     fetch(`/api/startRental/${id}`, {
     }).then((response) => response.json()).then((data) => {
       if (data.result) {
@@ -29,7 +32,7 @@ export default function Player({ closePlayer, id, startPlayer }: playerProps) {
         height="70%"
         controls={true}
         playing={true}
-        onStart={() => sample(id)}
+        onStart={() => start(startId)}
       />
       <div
         className={styles.closePlayer}

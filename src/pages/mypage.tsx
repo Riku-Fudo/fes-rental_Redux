@@ -14,6 +14,8 @@ import Countdown from '../components/Countdown';
 import { withIronSessionSsr } from 'iron-session/next';
 import { ironOptions } from '../../lib/ironOprion';
 import prisma from '../../lib/prisma';
+import { useAppSelector, useAppDispatch } from '../app/hocks'
+import { setStart, setStartId,selectMypage } from '../features/mypageSlice'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -23,11 +25,14 @@ export default function Mypage({
   rentalHistories: RentalHistory[];
 }) {
   // 動画プレイヤー用のstateと関数
-  const [start, setStart] = useState(false);
-  const [startId, setStartId] = useState(0);
+  // const [start, setStart] = useState(false);
+  // const [startId, setStartId] = useState(0);
+  const { start } = useAppSelector(selectMypage);
+  const dispatch = useAppDispatch();
   const startPlayer = (id: number) => {
-    setStart(!start);
-    setStartId(id);
+    console.log(`mypage:${id}`)
+    dispatch(setStart(!start))
+    dispatch(setStartId(id));
   };
 
   //ログインしたアカウント情報を取得
@@ -224,8 +229,7 @@ export default function Mypage({
 
           {start && (
             <Player
-              closePlayer={() => setStart(!start)}
-              id={startId}
+              closePlayer={() => dispatch(setStart(!start))}
               startPlayer={() => mutate('/api/getSessionInfo')}
             />
           )}
