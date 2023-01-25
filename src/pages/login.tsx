@@ -4,8 +4,8 @@ import Head from 'next/head';
 import styles from 'styles/login.module.css';
 import Image from 'next/image';
 import Header from '../components/Header';
-import { useSelector, useDispatch } from 'react-redux';
-import { setMailAddress, setPassword } from '../features/loginSlice'
+import { useAppSelector, useAppDispatch } from '../app/hocks'
+import { setMailAddress, setPassword ,selectLogin} from '../features/loginSlice'
 
 interface RootState {
   mailAddress: string,
@@ -13,11 +13,8 @@ interface RootState {
 }
 
 export default function Home() {
-  // const [mailAddress, setMailAddress] = useState(''); //名前の情報を更新して保存
-  // const [password, setPassword] = useState('');
-  const mailAddress = useSelector((state:RootState) => state.mailAddress);
-  const password = useSelector((state:RootState) => state.password);
-  const dispatch = useDispatch();
+  const {mailAddress, password} = useAppSelector(selectLogin);
+  const dispatch = useAppDispatch();
   const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
@@ -25,6 +22,7 @@ export default function Home() {
   const submitHandler = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
+    console.log(mailAddress)
     e.preventDefault(); //既定の動作を止める
     await fetch('/api/login', {
       //Jsonファイルに送る

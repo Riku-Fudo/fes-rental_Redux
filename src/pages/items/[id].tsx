@@ -13,8 +13,21 @@ import Review from '../../components/Review';
 import ReviewBtn from 'components/ReviewBtn';
 import prisma from '../../../lib/prisma';
 import Countdown from '../../components/Countdown';
+import { useAppSelector, useAppDispatch } from '../../app/hocks'
+import { setPrice, setPeriod, setIsChoiced, setStart, setStartId, setRental, selectItems } from '../../features/itemsSlice'
+
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+// Reduxのtype宣言
+interface RootState {
+  price: number,
+  period: number,
+  isChoiced: boolean,
+  start: boolean,
+  startId:number,
+  rental: RentalHistory[]
+}
 
 export async function getStaticPaths() {
   const data = await prisma.item.findMany();
@@ -60,16 +73,12 @@ export async function getStaticProps({
 }
 
 export default function ItemDetail({ item }: { item: Item }) {
-  const [price, setPrice] = useState(0);
-  const [period, setPeriod] = useState(0);
-  const [isChoiced, setIsChoiced] = useState(false);
-  const [start, setStart] = useState(false);
-  const [startId, setStartId] = useState(0);
-  const [rental, setRental] = useState<RentalHistory[]>([]);
+  const { price, period, isChoiced, start, startId, rental} = useAppSelector(selectItems);
+  const dispatch = useAppDispatch();
 
   const startPlayer = (id: number) => {
-    setStart(!start);
-    setStartId(id);
+    dispatch(setStart(!start));
+    dispatch(setStartId(id));
   };
 
   const { data } = UseSWR<SessionUser>('/api/getUser', fetcher);
@@ -79,7 +88,7 @@ export default function ItemDetail({ item }: { item: Item }) {
     fetch(`/api/selectRental/${userId}`)
       .then((res) => res.json())
       .then((result) => {
-        setRental(result.rental);
+        dispatch(setRental(result.rental));
       });
   }, [userId]);
 
@@ -170,18 +179,22 @@ export default function ItemDetail({ item }: { item: Item }) {
   // レンタル期間と価格の切り替え
   const chengeRentalPeriod = (num: number) => {
     if (num === 2) {
+      // dispatch(setPeriod(num))
       setPeriod(num);
-      setPrice(item.twoDaysPrice);
+      dispatch(setPrice(item.twoDaysPrice));
     } else {
+      // dispatch(setPeriod(num));
       setPeriod(num);
-      setPrice(item.sevenDaysPrice);
+      dispatch(setPrice(item.sevenDaysPrice));
     }
   };
+
 
   // 選択した商品をカートに追加
   const handleAddItem = async (item: Item) => {
     // 　ラジオボタンの判定のチェック
     if (price === 0 || period === 0) {
+      // dispatch(setIsChoiced(true));
       setIsChoiced(true);
       return;
     }
@@ -196,6 +209,7 @@ export default function ItemDetail({ item }: { item: Item }) {
         .then((res) => res.json())
         .then((result) => {
           if (isChoiced === true) {
+            // dispatch(setIsChoiced(!isChoiced));
             setIsChoiced(!isChoiced);
           }
           if (result.isAdd === true) {
@@ -236,7 +250,8 @@ export default function ItemDetail({ item }: { item: Item }) {
         .then((res) => res.json())
         .then((result) => {
           if (isChoiced === true) {
-            setIsChoiced(!isChoiced);
+            // dispatch(setIsChoiced(!isChoiced));
+            setIsChoiced(true);
           }
           cartflg = true;
           mutate('/api/getUser');
@@ -284,7 +299,7 @@ export default function ItemDetail({ item }: { item: Item }) {
     cartflg ? handleDelte(item) : handleAddItem(item);
   };
   const closePlayer = () => {
-    setStart(!start);
+    dispatch(setStart(!start));
     mutate('/api/getUser');
   };
 
@@ -309,6 +324,7 @@ export default function ItemDetail({ item }: { item: Item }) {
         <p className={styles.detailTitle}>{item.artist}</p>
       </div>
       <main className={styles.detail}>
+        <p>Periodの値：{price}</p>
         <form onSubmit={(e) => handleSubmit(e, item)}>
           <div>
             <div className={styles.detaiContainer}>
