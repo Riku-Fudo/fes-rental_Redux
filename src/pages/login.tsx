@@ -7,11 +7,6 @@ import Header from '../components/Header';
 import { useAppSelector, useAppDispatch } from '../app/hocks'
 import { setMailAddress, setPassword ,selectLogin} from '../features/loginSlice'
 
-interface RootState {
-  mailAddress: string,
-  password: string
-}
-
 export default function Home() {
   const {mailAddress, password} = useAppSelector(selectLogin);
   const dispatch = useAppDispatch();
