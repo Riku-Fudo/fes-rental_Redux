@@ -324,7 +324,6 @@ export default function ItemDetail({ item }: { item: Item }) {
         <p className={styles.detailTitle}>{item.artist}</p>
       </div>
       <main className={styles.detail}>
-        <p>Periodの値：{price}</p>
         <form onSubmit={(e) => handleSubmit(e, item)}>
           <div>
             <div className={styles.detaiContainer}>

@@ -1,11 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from 'styles/register.module.css';
 import styleHeader from 'styles/header.module.css';
 import Link from 'next/link';
 import Head from 'next/head';
 import Image from 'next/image';
-import { config } from '../config/index';
+import { useAppSelector, useAppDispatch } from '../app/hocks'
+import {
+  // setUserName,
+  // setZipcode,
+  // setPrefectures,
+  // setCity,
+  // setHouseNumber,
+  // setBuildingName,
+  // setFamilyName,
+  // setFirstName,
+  // setFamilyNameKana,
+  // setFirstNameKana,
+  // setPhoneNumber,
+  // setMailAddress,
+  // setPassword,
+  // setPasswordTest,
+  setFormValues,
+  selectRegister
+}  from '../features/registerSlice'
 
 type Errors = {
   userName: string;
@@ -18,30 +36,15 @@ type Errors = {
   firstName: string;
   familyNameKana: string;
   firstNameKana: string;
-  phoneNumbe: string;
+  phoneNumber: string;
   mailAddress: string;
   password: string;
   passwordTest: string;
 };
 
 export default function LoginScreen() {
-  const initialValues = {
-    userName: '',
-    zipcode: '',
-    prefectures: '',
-    city: '',
-    houseNumber: '',
-    buildingName: '',
-    familyName: '',
-    firstName: '',
-    familyNameKana: '',
-    firstNameKana: '',
-    phoneNumbe: '',
-    mailAddress: '',
-    password: '',
-    passwordTest: '',
-  };
-  const [formValues, setFormValues] = useState(initialValues);
+  const {formValues} = useAppSelector(selectRegister);
+  const dispatch = useAppDispatch();
   const [formErros, setFormErrors] = useState({
     userName: '',
     zipcode: '',
@@ -53,14 +56,11 @@ export default function LoginScreen() {
     firstName: '',
     familyNameKana: '',
     firstNameKana: '',
-    phoneNumbe: '',
+    phoneNumber: '',
     mailAddress: '',
     password: '',
     passwordTest: '',
   });
-  const rentalHistories: [] = []; ///レンタル履歴
-  const userCarts: [] = []; //カートの中身
-  const favoriteGenre: number = 0; //お気に入りジャンル
   const router = useRouter(); //登録された情報を更新した状態でページを移動
 
   //住所を検索
@@ -78,12 +78,12 @@ export default function LoginScreen() {
     //郵便番号が正しく取得できているか
     if (Address.results !== null) {
       // prefectures,city,houseNumberの値を変更
-      setFormValues({
+      dispatch(setFormValues({
         ...formValues,
         prefectures: Address.results[0].address1,
         city:
           Address.results[0].address2 + Address.results[0].address3,
-      });
+      }));
 
       setFormErrors({
         ...formErros,
@@ -100,7 +100,7 @@ export default function LoginScreen() {
   //文字を打った時
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
+    dispatch(setFormValues({ ...formValues, [name]: value }));
   };
 
   //会員登録ボタンを押した時
@@ -137,7 +137,7 @@ export default function LoginScreen() {
         formValues.firstName === '' ||
         formValues.familyNameKana === '' ||
         formValues.firstNameKana === '' ||
-        formValues.phoneNumbe === '' ||
+        formValues.phoneNumber === '' ||
         formValues.mailAddress === '' ||
         formValues.password === '' ||
         formValues.passwordTest === ''
@@ -151,7 +151,7 @@ export default function LoginScreen() {
       error.firstName === '' &&
       error.familyNameKana === '' &&
       error.firstNameKana === '' &&
-      error.phoneNumbe === '' &&
+      error.phoneNumber === '' &&
       error.mailAddress === '' &&
       error.password === '' &&
       error.passwordTest === ''
@@ -199,7 +199,7 @@ export default function LoginScreen() {
       firstName: '',
       familyNameKana: '',
       firstNameKana: '',
-      phoneNumbe: '',
+      phoneNumber: '',
       mailAddress: '',
       password: '',
       passwordTest: '',
@@ -238,10 +238,10 @@ export default function LoginScreen() {
     if (!formValues.firstNameKana) {
       errors.firstNameKana = 'メイを入力してください';
     }
-    if (!formValues.phoneNumbe) {
-      errors.phoneNumbe = '電話番号を入力してください';
-    } else if (!tellRegex.test(formValues.phoneNumbe)) {
-      errors.phoneNumbe =
+    if (!formValues.phoneNumber) {
+      errors.phoneNumber = '電話番号を入力してください';
+    } else if (!tellRegex.test(formValues.phoneNumber)) {
+      errors.phoneNumber =
         '正しい電話番号を入力してください(ハイフンなし)';
     }
     if (!formValues.mailAddress) {
@@ -522,7 +522,7 @@ export default function LoginScreen() {
                 <div className={styles.labelWrapper}>
                   <label
                     className={styles.label}
-                    htmlFor={'phoneNumbe'}
+                    htmlFor={'phoneNumber'}
                   >
                     電話番号
                   </label>
@@ -530,14 +530,14 @@ export default function LoginScreen() {
                 </div>
                 <input
                   type="tel"
-                  name="phoneNumbe"
-                  id="phoneNumbe"
-                  value={formValues.phoneNumbe}
+                  name="phoneNumber"
+                  id="phoneNumber"
+                  value={formValues.phoneNumber}
                   onChange={(e) => handleChange(e)}
                 />
-                {formErros.phoneNumbe && (
+                {formErros.phoneNumber && (
                   <p className={styles.error}>
-                    {formErros.phoneNumbe}
+                    {formErros.phoneNumber}
                   </p>
                 )}
               </div>
