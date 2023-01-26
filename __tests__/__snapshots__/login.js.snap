@@ -1,0 +1,174 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`next-router-mock renders loginPages 1`] = `
+[
+  <header
+    className="header"
+  >
+    <div
+      className="infoWrapper"
+    >
+      <div
+        className="info"
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onTouchStart={[Function]}
+        >
+          <img
+            alt="タイトルロゴ"
+            data-nimg="1"
+            decoding="async"
+            height={70}
+            loading="lazy"
+            onError={[Function]}
+            onLoad={[Function]}
+            src="/_next/image?url=%2Fimages%2Flogo.png&w=640&q=75"
+            srcSet="/_next/image?url=%2Fimages%2Flogo.png&w=256&q=75 1x, /_next/image?url=%2Fimages%2Flogo.png&w=640&q=75 2x"
+            style={
+              {
+                "color": "transparent",
+              }
+            }
+            width={232}
+          />
+        </a>
+        <div
+          className="nav_Button"
+          onClick={[Function]}
+        >
+          <span />
+           
+          <span />
+           
+          <span />
+        </div>
+        <nav
+          className="pc_nav"
+        >
+          <ul>
+            <li>
+              <a
+                href="/"
+                onClick={[Function]}
+                onMouseEnter={[Function]}
+                onTouchStart={[Function]}
+              >
+                <img
+                  alt="トップページのアイコン"
+                  className="icon"
+                  data-nimg="1"
+                  decoding="async"
+                  height={32}
+                  loading="lazy"
+                  onError={[Function]}
+                  onLoad={[Function]}
+                  src="/_next/image?url=%2Fimages%2Ficon-top.png&w=64&q=75"
+                  srcSet="/_next/image?url=%2Fimages%2Ficon-top.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2Ficon-top.png&w=64&q=75 2x"
+                  style={
+                    {
+                      "color": "transparent",
+                    }
+                  }
+                  width={32}
+                />
+                <span
+                  className="iconText"
+                >
+                  トップページ
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/register"
+                onClick={[Function]}
+                onMouseEnter={[Function]}
+                onTouchStart={[Function]}
+              >
+                <div
+                  className="registerBtn"
+                >
+                  ユーザ登録はこちら
+                </div>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>,
+  <main
+    className="loginMain"
+  >
+    <section
+      className="formWrapper"
+    >
+      <h1>
+        <img
+          alt="タイトルロゴ"
+          data-nimg="1"
+          decoding="async"
+          height={60}
+          loading="lazy"
+          onError={[Function]}
+          onLoad={[Function]}
+          src="/_next/image?url=%2Fimages%2Flogo.png&w=384&q=75"
+          srcSet="/_next/image?url=%2Fimages%2Flogo.png&w=256&q=75 1x, /_next/image?url=%2Fimages%2Flogo.png&w=384&q=75 2x"
+          style={
+            {
+              "color": "transparent",
+            }
+          }
+          width={190}
+        />
+      </h1>
+      <form
+        className="loginForm"
+        onSubmit={[Function]}
+      >
+        <span
+          id="Message"
+        />
+        <ul>
+          <li>
+            <label>
+              メールアドレス
+            </label>
+            <input
+              id="mailAddress"
+              name="mailAddress"
+              onChange={[Function]}
+              type="email"
+              value=""
+            />
+          </li>
+          <li>
+            <label>
+              パスワード
+            </label>
+            <input
+              id="password"
+              name="password"
+              onChange={[Function]}
+              type="password"
+              value=""
+            />
+          </li>
+        </ul>
+        <p
+          className="erroMessage"
+        />
+        <button
+          className="loginBtn"
+          type="submit"
+        >
+          ログイン
+        </button>
+      </form>
+    </section>
+  </main>,
+]
+`;
