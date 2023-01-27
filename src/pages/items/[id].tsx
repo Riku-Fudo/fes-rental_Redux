@@ -179,12 +179,10 @@ export default function ItemDetail({ item }: { item: Item }) {
   // レンタル期間と価格の切り替え
   const chengeRentalPeriod = (num: number) => {
     if (num === 2) {
-      // dispatch(setPeriod(num))
-      setPeriod(num);
+      dispatch(setPeriod(num));
       dispatch(setPrice(item.twoDaysPrice));
     } else {
-      // dispatch(setPeriod(num));
-      setPeriod(num);
+      dispatch(setPeriod(num));
       dispatch(setPrice(item.sevenDaysPrice));
     }
   };
@@ -194,8 +192,7 @@ export default function ItemDetail({ item }: { item: Item }) {
   const handleAddItem = async (item: Item) => {
     // 　ラジオボタンの判定のチェック
     if (price === 0 || period === 0) {
-      // dispatch(setIsChoiced(true));
-      setIsChoiced(true);
+      dispatch(setIsChoiced(true));
       return;
     }
 
@@ -209,8 +206,7 @@ export default function ItemDetail({ item }: { item: Item }) {
         .then((res) => res.json())
         .then((result) => {
           if (isChoiced === true) {
-            // dispatch(setIsChoiced(!isChoiced));
-            setIsChoiced(!isChoiced);
+            dispatch(setIsChoiced(!isChoiced));
           }
           if (result.isAdd === true) {
             cartflg = true;
@@ -250,8 +246,7 @@ export default function ItemDetail({ item }: { item: Item }) {
         .then((res) => res.json())
         .then((result) => {
           if (isChoiced === true) {
-            // dispatch(setIsChoiced(!isChoiced));
-            setIsChoiced(true);
+            dispatch(setIsChoiced(!isChoiced));
           }
           cartflg = true;
           mutate('/api/getUser');
